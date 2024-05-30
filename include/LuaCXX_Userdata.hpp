@@ -18,9 +18,10 @@ class Userdata:public Variant
 		if (lua_type(L, stack_index) == LUA_TUSERDATA)
 			return *lua_touserdata(L, stack_index);
 		else
-			return reinterpret_cast<T>((unsigned char*){0});
+			return reinterpret_cast<T>((unsigned char[sizeof(Userdata<T>)]){0});
 	}
 };
+
 template<class T>
 class LightUserdata:public Variant
 {
@@ -31,7 +32,7 @@ class LightUserdata:public Variant
 		if (lua_type(L, stack_index) == LUA_TLIGHTUSERDATA)
 			return *lua_touserdata(L, stack_index);
 		else
-			return reinterpret_cast<T>((unsigned char*){0});
+			return reinterpret_cast<T>((unsigned char[sizeof(LightUserdata<T>)]){0});
 	}
 };
 }

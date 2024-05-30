@@ -6,6 +6,7 @@
 #include "LuaCXX_Thread.hpp"
 #include "LuaCXX_Variant.hpp"
 #include "LuaCXX_String.hpp"
+#include "LuaCXX_Userdata.hpp"
 #include "LuaCXX_Common.hpp"
 
 #endif

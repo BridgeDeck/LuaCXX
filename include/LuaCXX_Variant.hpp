@@ -2,6 +2,7 @@
 #define LuaCXX_Variant_HPP
 
 #include "LuaCXX_Common.hpp"
+
 namespace LuaCXX
 {
 
@@ -12,9 +13,7 @@ class Variant
     protected:
     Variant(lua_State* th, int index);
 
-
     public:
-
     VariantType get_type() const;
 	
 	/**
@@ -27,9 +26,21 @@ class Variant
     operator Thread();
 	operator Function();
 	template<class T>
-	operator Userdata<T>();
+	operator Userdata<T>()
+	{
+		Userdata<T> u;
+		u.stack_index = stack_index;
+		u.L = L;
+		return u;
+	}
 	template<class T>
-	operator LightUserdata<T>();
+	operator LightUserdata<T>()
+	{
+		LightUserdata<T> u;
+		u.stack_index = stack_index;
+		u.L = L;
+		return u;
+	}
 	
 	/*
 	 * Metatable operations
@@ -38,19 +49,15 @@ class Variant
 	void set_metatable(const Table& mt);
 	Table get_metatable() const;
 
-	template<class K, class V>
-	void set(K, V);
-	template<class K, class V>
-	void rawset(K, V);
-
-	template<class K, class V>
-	V get(K);
-	template<class K, class V>
-	V rawget(K) const;
+	void set(Variant K, Variant V);
+	void rawset(Variant K, Variant V);
+	Variant get(Variant K);
+	Variant rawget(Variant K) const;
 
     protected:
+
     lua_State* L;
-    int stack_index = 0;
+    int stack_index;
 };
 }
 #endif

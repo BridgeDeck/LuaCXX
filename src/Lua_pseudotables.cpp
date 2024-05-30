@@ -5,5 +5,6 @@ using namespace LuaCXX;
 
 Table Lua::globals() const
 {
-    return Table(L, LUA_GLOBALSINDEX);
+    Table t = Table(L, LUA_GLOBALSINDEX);
+    return t;
 }

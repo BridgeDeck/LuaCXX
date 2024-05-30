@@ -19,9 +19,12 @@ set(CMAKE_CXX_STANDARD 11)
 set (SRC_FILES
 	src/Thread.cpp
 	src/Table.cpp
+	src/String.cpp
 	src/Variant.cpp
+	src/Variant_conversion.cpp
 	src/Lua.cpp
 	src/Lua_pseudotables.cpp
+	src/Lua_create_variant.cpp
 )
 
 set (INC_FILES

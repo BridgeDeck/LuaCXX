@@ -13,22 +13,20 @@ class Lua
 	public:
 	Lua(lua_State* from);
 
-	StackReader stack() const;
-    VariantType stack_get_type(int index) const;
+	Stack stack() const;
 
 	String new_string(const char* my_str);
-
     Table new_table();
+	Thread new_thread();
+	Variant new_nil();
+	Variant new_number(double n);
+	Variant new_boolean(bool b);
+	Variant new_function(int (*func)(lua_State*));
 
 	template<class T>
 	Userdata<T> new_userdata();
-
 	template<class T>
 	LightUserdata<T> new_light_userdata(T* lud);
-
-	Thread new_thread();
-
-	Variant new_nil();
 
 	Table environment() const;
     Table globals() const;

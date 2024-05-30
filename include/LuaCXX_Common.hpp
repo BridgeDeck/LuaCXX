@@ -30,7 +30,7 @@ class Thread;
 class Table;
 class String;
 class Function;
-class StackReader;
+class Stack;
 
 template<class T>
 class LightUserdata;

@@ -80,10 +80,16 @@
 #define CRESET "\e[0m"
 #define COLOR_RESET "\e[0m"
 
+#define INIT_TEST \
+    int code = 0;
+
+#define FINISH_TEST \
+    return code;
+
 #define ASSERT(condition, error_message) \
-    if (!condition) { \
+    if (!(condition)) { \
         std::cout<<RED<<__FILE__<<":"<<__LINE__<<" : "<<error_message<<COLOR_RESET<<std::endl; \
-        return 1; \
+        code = 1; \
     }
 
 #endif
