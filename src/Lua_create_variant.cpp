@@ -2,6 +2,7 @@
     This source file is for `Lua`'s methods that create handles to values.
 */
 #include "LuaCXX.hpp"
+#include "LuaCXX_Common.hpp"
 
 using namespace LuaCXX;
 
@@ -39,5 +40,11 @@ Thread Lua::new_thread()
 Variant Lua::new_function(lua_CFunction f)
 {
     lua_pushcclosure(L, f, 0);
+    return Variant(L, lua_gettop(L));
+}
+
+Variant Lua::new_nil()
+{
+    lua_pushnil(L);
     return Variant(L, lua_gettop(L));
 }

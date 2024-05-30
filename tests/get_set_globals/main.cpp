@@ -129,6 +129,40 @@ int main()
 			ASSERT(lua_tonumber(L, -1)==250609.0, 
 				"I know this feature is useless, but can it atleast do something to interest me?");
 		}
+		// test setting nil
+		{
+			gt.rawset(lua.new_string("my_car_color"), lua.new_nil());
+			ASSERT(gt.rawget(lua.new_string("my_car_color")).get_type()==VariantType::NIL, 
+				"Not nil somehow...")
+				
+			gt.rawset(lua.new_string("has_driver"), lua.new_nil());
+			ASSERT(gt.rawget(lua.new_string("has_driver")).get_type()==VariantType::NIL, 
+				"Not nil somehow...")
+
+			gt.rawset(lua.new_string("speed"), lua.new_nil());
+			ASSERT(gt.rawget(lua.new_string("speed")).get_type()==VariantType::NIL, 
+				"Not nil somehow...")
+
+			gt.rawset(lua.new_string("tire_pressure"), lua.new_nil());
+			ASSERT(gt.rawget(lua.new_string("tire_pressure")).get_type()==VariantType::NIL, 
+				"Not nil somehow...")
+
+			gt.rawset(lua.new_string("engine"), lua.new_nil());
+			ASSERT(gt.rawget(lua.new_string("engine")).get_type()==VariantType::NIL, 
+				"Not nil somehow...")
+
+			gt.rawset(lua.new_string("the_driver"), lua.new_nil());
+			ASSERT(gt.rawget(lua.new_string("the_driver")).get_type()==VariantType::NIL, 
+				"Not nil somehow...")
+
+			gt.rawset(lua.new_string("playing_music"), lua.new_nil());
+			ASSERT(gt.rawget(lua.new_string("playing_music")).get_type()==VariantType::NIL, 
+				"Not nil somehow...")
+
+			gt.rawset(lua.new_string("useless_feature"), lua.new_nil());
+			ASSERT(gt.rawget(lua.new_string("useless_feature")).get_type()==VariantType::NIL, 
+				"Not nil somehow...")
+		}
 	}	
 
 	lua_close(L);

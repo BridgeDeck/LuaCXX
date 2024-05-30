@@ -42,9 +42,7 @@ class Lua
 	Thread new_thread();
 
 	/*
-		Create a new nil value
-		TODO: I just realized I have not made a test for this one yet, don't think it even has a
-		definition.
+		Create a new nil value.
 	*/
 	Variant new_nil();
 
