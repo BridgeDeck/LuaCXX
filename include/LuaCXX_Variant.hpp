@@ -5,7 +5,9 @@
 #include <vector>
 namespace LuaCXX
 {
-
+/*
+	Handle to a value on the Lua stack.
+*/
 class Variant
 {
     friend class Lua;
@@ -40,18 +42,62 @@ class Variant
 	 * Metatable operations
 	 * */
 
+	/*
+		Set the metatable of this value, if it can have one.
+		TODO: Not defined internally :P
+	*/
 	void set_metatable(const Table& mt);
+
+	/*
+		Get the metatable of this value, if it has one.
+		TODO: Not defined internally :hilarious skull emoji:
+	*/
 	Table get_metatable() const;
 
+	/*
+		Set the key `K` to value `V`.
+		May trigger this value's `"__newindex"` metamethod if it has one.
+		TODO: Not defined internally 
+	*/
 	void set(Variant K, Variant V);
+
+	/*
+		Set the key `K` to value `V`.
+		Will not trigger metamethods.
+	*/
 	void rawset(Variant K, Variant V);
+
+	/*
+		Get a value from key `K`.
+		May trigger this value's `"__index"` metamethod if it has one.
+		TODO: Not defined internally 
+	*/
 	Variant get(Variant K);
+
+	/*
+		Get a value from key `K`.
+		Will not trigger metamethods.
+	*/
 	Variant rawget(Variant K) const;
 
+	/*
+		Calls this value as a function or using the `"__call"` metamethod.
+		Only to used internally.
+		TODO: Not defined internally [FUCKING SHOCKER] 
+	*/
 	std::vector<Variant> call();
 	
-	std::vector<Variant> call(std::vector<Variant> args);
+	/*
+		Calls this value as a function or using the `"__call"` metamethod
+		with the following `arguments`.
+		TODO: Not defined internally 
+	*/
+	std::vector<Variant> call(std::vector<Variant> arguments);
 
+	/*
+		Calls this value as a function or using the `"__call"` metamethod
+		with the following arguments.
+	*/
 	template<class... Args>
 	std::vector<Variant> call(Variant v, Args... a )
 	{

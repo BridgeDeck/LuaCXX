@@ -7,16 +7,16 @@
 
 namespace LuaCXX
 {
+/*
+	Handle to a Lua thread.
+*/
 class Thread: public Variant
 {
 	friend class Lua;
-	private:
 	public:
-	
 
 	operator lua_State*();
 	operator Lua();
-	
 };
 }
 #endif

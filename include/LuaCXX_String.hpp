@@ -6,6 +6,9 @@
 
 namespace LuaCXX
 {
+/*
+    Handle to a string
+*/
 class String:public Variant
 {
     public:

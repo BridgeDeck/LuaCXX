@@ -6,6 +6,10 @@
 #include "LuaCXX_Variant.hpp"
 namespace LuaCXX
 {
+
+/*
+	Handle to a Lua userdata.
+*/
 template<class T>
 class Userdata:public Variant
 {
@@ -26,7 +30,9 @@ class Userdata:public Variant
 
 	}
 };
-
+/*
+	Handle to a Lua light userdata.
+*/
 template<class T>
 class LightUserdata:public Variant
 {

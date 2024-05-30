@@ -1,4 +1,6 @@
-
+/*
+    This source file is for `Lua`'s methods that create handles to values.
+*/
 #include "LuaCXX.hpp"
 
 using namespace LuaCXX;

@@ -1,3 +1,7 @@
+/*
+    This source file is specifically for `Variant`'s conversion method.
+*/
+
 #include "LuaCXX_Variant.hpp"
 #include "LuaCXX_String.hpp"
 #include "LuaCXX_Table.hpp"
