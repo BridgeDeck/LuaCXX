@@ -13,12 +13,17 @@ class Userdata:public Variant
 	private:
 
 	public:
-	T operator->()
+	T* operator->()
+	{
+		return (T*)(*this);
+	}
+	operator T*()
 	{
 		if (lua_type(L, stack_index) == LUA_TUSERDATA)
-			return *lua_touserdata(L, stack_index);
+			return (T*)lua_touserdata(L, stack_index);
 		else
-			return reinterpret_cast<T>((unsigned char[sizeof(Userdata<T>)]){0});
+			return 0;
+
 	}
 };
 
@@ -27,12 +32,16 @@ class LightUserdata:public Variant
 {
 	friend class Lua;
 	public:
-	T operator->()
+	T* operator->()
+	{
+		return (T*)(*this);
+	}
+	operator T*()
 	{
 		if (lua_type(L, stack_index) == LUA_TLIGHTUSERDATA)
-			return *lua_touserdata(L, stack_index);
+			return (T*)lua_touserdata(L, stack_index);
 		else
-			return reinterpret_cast<T>((unsigned char[sizeof(LightUserdata<T>)]){0});
+			return 0;
 	}
 };
 }

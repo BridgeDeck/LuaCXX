@@ -1,6 +1,7 @@
 #include "LuaCXX_Variant.hpp"
 #include "LuaCXX_String.hpp"
 #include "LuaCXX_Table.hpp"
+#include "LuaCXX_Thread.hpp"
 using namespace LuaCXX;
 
 Variant::operator String()
@@ -26,4 +27,15 @@ Variant::operator double()
     if (lua_type(L, stack_index) != LUA_TNUMBER)
         return 0.0;
     return lua_tonumber(L, stack_index);
+}
+
+Variant::operator Thread()
+{
+    return *((Thread*)this);
+}
+Variant::operator lua_CFunction()
+{
+    if (lua_type(L, stack_index) != LUA_TFUNCTION)
+        return 0;
+    return lua_tocfunction(L, stack_index);
 }

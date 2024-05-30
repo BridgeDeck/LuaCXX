@@ -24,6 +24,12 @@ typedef enum VariantType{
     NONE=LUA_TNONE
 } VariantType;
 
+
+typedef enum ThreadStatus{
+	Yield,
+	Ended,
+	Error
+} ThreadStatus;
 class Lua;
 class Variant;
 class Thread;

@@ -3,6 +3,7 @@
 
 #include "LuaCXX_Common.hpp"
 #include "LuaCXX_Variant.hpp"
+#include "LuaCXX_Lua.hpp"
 
 namespace LuaCXX
 {
@@ -11,14 +12,10 @@ class Thread: public Variant
 	friend class Lua;
 	private:
 	public:
-	enum Status
-	{
-		Yield,
-		Ended,
-		Error
-	};
-	enum Status get_status() const;
+	
 
+	operator lua_State*();
+	operator Lua();
 	
 };
 }

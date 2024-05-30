@@ -21,6 +21,7 @@ int main()
 	cout << lua_gettop(L) << endl;
 	lua_tothread(L, -1);
 	cout << lua_gettop(L) << endl;
+
     lua_close(L);
     {
         cout << sizeof(Userdata<void>) << endl;

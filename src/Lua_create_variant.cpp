@@ -27,3 +27,15 @@ Table Lua::new_table()
     lua_createtable(L, 0, 0);
     return Variant(L, lua_gettop(L));
 }
+
+Thread Lua::new_thread()
+{
+    lua_newthread(L);
+    return Variant(L, lua_gettop(L));
+}
+
+Variant Lua::new_function(lua_CFunction f)
+{
+    lua_pushcclosure(L, f, 0);
+    return Variant(L, lua_gettop(L));
+}

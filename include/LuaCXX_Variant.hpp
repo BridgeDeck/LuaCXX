@@ -2,7 +2,7 @@
 #define LuaCXX_Variant_HPP
 
 #include "LuaCXX_Common.hpp"
-
+#include <vector>
 namespace LuaCXX
 {
 
@@ -24,22 +24,16 @@ class Variant
     operator String();
     operator Table();
     operator Thread();
-	operator Function();
+	operator lua_CFunction();
 	template<class T>
 	operator Userdata<T>()
 	{
-		Userdata<T> u;
-		u.stack_index = stack_index;
-		u.L = L;
-		return u;
+		return *((Userdata<T>*)this);
 	}
 	template<class T>
 	operator LightUserdata<T>()
 	{
-		LightUserdata<T> u;
-		u.stack_index = stack_index;
-		u.L = L;
-		return u;
+		return *((LightUserdata<T>*)this);
 	}
 	
 	/*
@@ -54,7 +48,19 @@ class Variant
 	Variant get(Variant K);
 	Variant rawget(Variant K) const;
 
+	std::vector<Variant> call();
+	
+	std::vector<Variant> call(std::vector<Variant> args);
+
+	template<class... Args>
+	std::vector<Variant> call(Variant v, Args... a )
+	{
+		_tmp_args.push_back(v);
+		return call(a...);
+	}
+
     protected:
+	std::vector<Variant> _tmp_args;
 
     lua_State* L;
     int stack_index;

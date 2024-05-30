@@ -2,6 +2,7 @@
 #define LuaCXX_Lua_HPP
 
 #include "LuaCXX_Common.hpp"
+#include "LuaCXX_Variant.hpp"
 
 namespace LuaCXX
 {
@@ -13,6 +14,8 @@ class Lua
 	public:
 	Lua(lua_State* from);
 
+	ThreadStatus get_status() const;
+
 	Stack stack() const;
 
 	String new_string(const char* my_str);
@@ -21,12 +24,28 @@ class Lua
 	Variant new_nil();
 	Variant new_number(double n);
 	Variant new_boolean(bool b);
-	Variant new_function(int (*func)(lua_State*));
+	Variant new_function(lua_CFunction f);
 
+	template<class T, class... InitArgs>
+	Userdata<T> new_userdata(InitArgs... args)
+	{
+		T* new_ud = (T*)lua_newuserdata(L, sizeof(T));
+		*new_ud = T(args...);
+		return Variant(L, lua_gettop(L));
+	}
 	template<class T>
-	Userdata<T> new_userdata();
+	Userdata<T> create_userdata(T from)
+	{
+		T* new_ud = (T*)lua_newuserdata(L, sizeof(T));
+		*new_ud = from;
+		return Variant(L, lua_gettop(L));
+	}
 	template<class T>
-	LightUserdata<T> new_light_userdata(T* lud);
+	LightUserdata<T> new_light_userdata(T* lud)
+	{
+		lua_pushlightuserdata(L, (void *)lud);
+		return Variant(L, lua_gettop(L));
+	}
 
 	Table environment() const;
     Table globals() const;
