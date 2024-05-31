@@ -92,7 +92,33 @@ std::vector<Variant> Variant::call(std::vector<Variant> args)
     }
     return r;
 }
+std::vector<Variant> Variant::pcall(Variant errhandler, int& error_code_out)
+{
+    std::vector<Variant> r = pcall(errhandler, error_code_out, _tmp_args);
+    _tmp_args={};
+    return r;
+}
 
+std::vector<Variant> Variant::pcall(Variant errhandler, int& error_code_out, std::vector<Variant> args)
+{
+    if (get_type()!=VariantType::FUNCTION)
+        return {};
+    
+    std::vector<Variant> r = {};
+    lua_pushvalue(L, stack_index);
+    int results = lua_gettop(L);
+
+    for (auto i = args.begin();i!=args.end();i++)
+        lua_pushvalue(L, i->stack_index);
+    
+    error_code_out = lua_pcall(L, args.size(), LUA_MULTRET, errhandler.stack_index);
+    while (lua_type(L, results)!=LUA_TNONE)
+    {
+        r.push_back(Variant(L, results));
+        results++;
+    }
+    return r;
+}
 lua_State* Variant::get_lua() const
 {
     return L;

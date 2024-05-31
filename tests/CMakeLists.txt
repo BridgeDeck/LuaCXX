@@ -18,3 +18,6 @@ add_test(NAME "Creating libraries to use inside Lua" COMMAND lib_making)
 
 add_executable(metatable_userdata metatable_userdata/main.cpp)
 add_test(NAME "Creating Userdata's and assigning them metatables" COMMAND metatable_userdata)
+
+add_executable(protected_calls protected_calls/main.cpp)
+add_test(NAME "Test out protected calls" COMMAND protected_calls)
