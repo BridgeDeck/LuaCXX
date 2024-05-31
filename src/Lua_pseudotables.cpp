@@ -9,6 +9,15 @@ using namespace LuaCXX;
 
 Table Lua::globals() const
 {
-    Table t = Table(L, LUA_GLOBALSINDEX);
-    return t;
+    return Table(L, LUA_GLOBALSINDEX);
+}
+
+Table Lua::registry() const
+{
+    return Table(L, LUA_REGISTRYINDEX);
+}
+
+Table Lua::environment() const
+{
+    return Table(L, LUA_ENVIRONINDEX);
 }

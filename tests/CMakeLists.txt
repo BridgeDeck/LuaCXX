@@ -9,3 +9,6 @@ add_test(NAME PlaygroundTest COMMAND Playground)
 
 add_executable(get_set_globals get_set_globals/main.cpp)
 add_test(NAME "Getting and Setting Globals" COMMAND get_set_globals)
+
+add_executable(get_set_registry get_set_registry/main.cpp)
+add_test(NAME "Getting and Setting Lua's Registry" COMMAND get_set_registry)
