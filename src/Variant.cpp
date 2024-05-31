@@ -92,3 +92,8 @@ std::vector<Variant> Variant::call(std::vector<Variant> args)
     }
     return r;
 }
+
+lua_State* Variant::get_lua() const
+{
+    return L;
+}

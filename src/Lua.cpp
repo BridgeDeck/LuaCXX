@@ -33,3 +33,7 @@ Stack Lua::stack() const
 {
     return Stack(L);
 }
+Lua::operator lua_State *()
+{
+    return L;
+}

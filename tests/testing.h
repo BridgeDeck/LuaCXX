@@ -4,6 +4,47 @@
 #include "LuaCXX.hpp"
 #include <iostream>
 
+int _lua_print_func(lua_State* L)
+{
+    using namespace LuaCXX;
+    Lua lua = Lua(L);
+    Stack stack = lua.stack();
+    std::vector<Variant> args = stack.as_array();
+
+    for (auto i = args.begin();i!=args.end();i++)
+    {
+        switch (i->get_type()) {
+            case VariantType::BOOLEAN:
+            if ((bool)*i)
+                std::cout << true;
+            else
+                std::cout << false;
+            break;
+            case VariantType::STRING:
+            std::cout << (const char*)(String)*i;
+            break;
+            case VariantType::NUMBER:
+            std::cout << (double)*i;
+            break;
+            default:
+            break;
+        }
+        std::cout << std::endl;
+    }
+
+    return 0;
+}
+
+void init_print_function(lua_State*L)
+{
+    using namespace LuaCXX;
+
+    Lua lua = Lua(L);
+    lua.globals()
+        .rawset(lua.new_string("print"),
+            lua.new_function(_lua_print_func));
+
+}
 
 //Regular text
 #define BLK "\e[0;30m"

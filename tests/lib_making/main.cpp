@@ -13,35 +13,7 @@ const char* lua_source_code=
 "   print(\"Embrace the darkness thats within me!\")\n"
 "end\n";
 
-int _lua_print_func(lua_State* L)
-{
-    Lua lua = Lua(L);
-    Stack stack = lua.stack();
-    std::vector<Variant> args = stack.as_array();
 
-    for (auto i = args.begin();i!=args.end();i++)
-    {
-        switch (i->get_type()) {
-            case VariantType::BOOLEAN:
-            if ((bool)*i)
-                std::cout << true;
-            else
-                std::cout << false;
-            break;
-            case VariantType::STRING:
-            std::cout << (const char*)(String)*i;
-            break;
-            case VariantType::NUMBER:
-            std::cout << (double)*i;
-            break;
-            default:
-            break;
-        }
-        std::cout << std::endl;
-    }
-
-    return 0;
-}
 
 int _lua_human_shoot(lua_State*L)
 {
@@ -67,9 +39,7 @@ int main()
     luaL_openlibs(L);
     {
         Lua lua = Lua(L);
-        lua.globals()
-            .rawset(lua.new_string("print"),
-            lua.new_function(_lua_print_func));
+        init_print_function(lua);
         
         Table lib_table = lua.new_table();
         lib_table.rawset(lua.new_string("shoot"), 

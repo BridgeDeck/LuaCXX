@@ -39,19 +39,18 @@ class Variant
 		return *((LightUserdata<T>*)this);
 	}
 	
+	lua_State* get_lua() const;
 	/*
 	 * Metatable operations
 	 * */
 
 	/*
 		Set the metatable of this value, if it can have one.
-		TODO: Not defined internally :P
 	*/
-	void set_metatable(const Table& mt);
+	void set_metatable(Table mt);
 
 	/*
 		Get the metatable of this value, if it has one.
-		TODO: Not defined internally :hilarious skull emoji:
 	*/
 	Table get_metatable() const;
 
@@ -99,10 +98,36 @@ class Variant
 	}
 	/*
 		Calls this value as a function or using the `"__call"` metamethod
-		without arguments.
+		with `_tmp_args` as its arguments.
+		Used internally.
 	*/
 	std::vector<Variant> call();
 
+	/*
+		Calls this value as a function or using the `"__call"` metamethod (in protected mode)
+		with `_tmp_args` as its arguments.
+		Used internally.
+		TODO: Not defined internally apparently 
+	*/
+	std::vector<Variant> pcall(Variant err_handler, int& error_code);
+	
+	/*
+		Calls this value as a function or using the `"__call"` metamethod (in protected mode)
+		with the following `arguments`.
+		TODO: Not defined internally
+	*/
+	std::vector<Variant> pcall(Variant err_handler, int& error_code, std::vector<Variant> arguments);
+
+	/*
+		Calls this value as a function or using the `"__call"` metamethod (in protected mode)
+		with the following arguments.
+	*/
+	template<class... Args>
+	std::vector<Variant> pcall(Variant err_handler, int& error_code, Variant v, Args... a )
+	{
+		_tmp_args.push_back(v);
+		return pcall(err_handler, error_code, a...);
+	}
     protected:
 
 	std::vector<Variant> _tmp_args;

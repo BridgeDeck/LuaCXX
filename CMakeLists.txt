@@ -22,6 +22,7 @@ set (SRC_FILES
 	src/String.cpp
 	src/Stack.cpp
 	src/Variant.cpp
+	src/Variant_metatable.cpp
 	src/Variant_conversion.cpp
 	src/Lua.cpp
 	src/Lua_pseudotables.cpp
