@@ -53,8 +53,9 @@ int main()
         lua.globals()
             .rawset(lua.new_string("ext_component"), comp);
         lua.compile(
-            "print(ext_platform.to_display)\n"
-        );
+            "print(ext_component.to_display)\n"
+        ).call();
+
     }
     lua_close(L);
     FINISH_TEST
