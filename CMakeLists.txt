@@ -20,6 +20,7 @@ set (SRC_FILES
 	src/Thread.cpp
 	src/Table.cpp
 	src/String.cpp
+	src/Stack.cpp
 	src/Variant.cpp
 	src/Variant_conversion.cpp
 	src/Lua.cpp

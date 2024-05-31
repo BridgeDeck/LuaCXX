@@ -1,5 +1,6 @@
 #include "LuaCXX.hpp"
 #include "LuaCXX_Common.hpp"
+#include <vector>
 
 using namespace LuaCXX;
 
@@ -62,4 +63,32 @@ void Variant::rawset(Variant key, Variant value)
     lua_pushvalue(L, key.stack_index);
     lua_pushvalue(L, value.stack_index);
     lua_rawset(L, stack_index);
+}
+
+std::vector<Variant> Variant::call()
+{
+    std::vector<Variant> r = call(_tmp_args);
+    _tmp_args={};
+    return r;
+}
+
+std::vector<Variant> Variant::call(std::vector<Variant> args)
+{
+    if (get_type()!=VariantType::FUNCTION)
+        return {};
+    
+    std::vector<Variant> r = {};
+    lua_pushvalue(L, stack_index);
+    int results = lua_gettop(L);
+
+    for (auto i = args.begin();i!=args.end();i++)
+        lua_pushvalue(L, i->stack_index);
+    
+    lua_call(L, args.size(), LUA_MULTRET);
+    while (lua_type(L, results)!=LUA_TNONE)
+    {
+        r.push_back(Variant(L, results));
+        results++;
+    }
+    return r;
 }

@@ -11,6 +11,7 @@ namespace LuaCXX
 class Variant
 {
     friend class Lua;
+	friend class Stack;
 
     protected:
     Variant(lua_State* th, int index);
@@ -81,16 +82,8 @@ class Variant
 	Variant rawget(Variant K) const;
 
 	/*
-		Calls this value as a function or using the `"__call"` metamethod.
-		Only to used internally.
-		TODO: Not defined internally [FUCKING SHOCKER] 
-	*/
-	std::vector<Variant> call();
-	
-	/*
 		Calls this value as a function or using the `"__call"` metamethod
 		with the following `arguments`.
-		TODO: Not defined internally 
 	*/
 	std::vector<Variant> call(std::vector<Variant> arguments);
 
@@ -104,8 +97,14 @@ class Variant
 		_tmp_args.push_back(v);
 		return call(a...);
 	}
+	/*
+		Calls this value as a function or using the `"__call"` metamethod
+		without arguments.
+	*/
+	std::vector<Variant> call();
 
     protected:
+
 	std::vector<Variant> _tmp_args;
 
     lua_State* L;

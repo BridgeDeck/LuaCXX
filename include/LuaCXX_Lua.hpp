@@ -16,13 +16,11 @@ class Lua
 
 	/*
 		Get the status of this thread, see `ThreadStatus` for more details.
-		TODO: I don't think this method even has a definition
 	*/
 	ThreadStatus get_status() const;
 
 	/*
 		Get a handle to the Lua stack, see `Stack` for more information.
-		TODO: Yeah I don't have Stack implemented yet, but I habe plans.
 	*/
 	Stack stack() const;
 
@@ -107,6 +105,8 @@ class Lua
 		The Lua registry table
 	*/
     Table registry() const;
+
+	Variant compile(const char* lua_source_code);
 
     operator lua_State*();
 
