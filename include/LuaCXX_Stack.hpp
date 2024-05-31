@@ -17,15 +17,24 @@ class Stack
 
     std::vector<Variant> as_array() const;
 
+    /*
+        To be used at the `return` of a Lua CFunction
+    */ 
     int _return(std::vector<Variant> return_values);
 
-
+    /*
+        To be used at the `return` of a Lua CFunction
+    */
     template<class... ReturnValues>
     int _return(Variant v, ReturnValues... vv)
     {
         _tmp_return_values.push_back(v);
         return _return(vv...);
     }
+
+    /*
+        To be used at the `return` of a Lua CFunction
+    */
     int _return();
 
     private:

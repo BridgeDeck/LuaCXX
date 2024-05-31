@@ -107,14 +107,12 @@ class Variant
 		Calls this value as a function or using the `"__call"` metamethod (in protected mode)
 		with `_tmp_args` as its arguments.
 		Used internally.
-		TODO: Not defined internally apparently 
 	*/
 	std::vector<Variant> pcall(Variant err_handler, int& error_code);
 	
 	/*
 		Calls this value as a function or using the `"__call"` metamethod (in protected mode)
 		with the following `arguments`.
-		TODO: Not defined internally
 	*/
 	std::vector<Variant> pcall(Variant err_handler, int& error_code, std::vector<Variant> arguments);
 
