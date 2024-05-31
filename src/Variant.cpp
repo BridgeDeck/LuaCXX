@@ -65,6 +65,19 @@ void Variant::rawset(Variant key, Variant value)
     lua_rawset(L, stack_index);
 }
 
+Variant Variant::get(Variant key)
+{
+    lua_pushvalue(L, key.stack_index);
+    lua_gettable(L, stack_index);
+    return Variant(L, lua_gettop(L));
+}
+void Variant::set(Variant key, Variant value)
+{
+    lua_pushvalue(L, key.stack_index);
+    lua_pushvalue(L, value.stack_index);
+    lua_settable(L, stack_index);
+}
+
 std::vector<Variant> Variant::call()
 {
     std::vector<Variant> r = call(_tmp_args);

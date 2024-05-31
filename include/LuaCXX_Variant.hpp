@@ -57,7 +57,6 @@ class Variant
 	/*
 		Set the key `K` to value `V`.
 		May trigger this value's `"__newindex"` metamethod if it has one.
-		TODO: Not defined internally 
 	*/
 	void set(Variant K, Variant V);
 
@@ -70,7 +69,6 @@ class Variant
 	/*
 		Get a value from key `K`.
 		May trigger this value's `"__index"` metamethod if it has one.
-		TODO: Not defined internally 
 	*/
 	Variant get(Variant K);
 
