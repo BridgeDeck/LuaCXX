@@ -3,6 +3,10 @@
 */
 #include "LuaCXX.hpp"
 #include "LuaCXX_Common.hpp"
+#include <cstddef>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 using namespace LuaCXX;
 
@@ -46,5 +50,14 @@ Variant Lua::new_function(lua_CFunction f)
 Variant Lua::new_nil()
 {
     lua_pushnil(L);
+    return Variant(L, lua_gettop(L));
+}
+Variant Lua::compile(const char *lua_source_code, const char* chunkname)
+{
+    size_t sz=0;
+    while(lua_source_code[sz]!=0 &&
+        lua_source_code[sz]!=EOF)
+        sz++;
+    luaL_loadbuffer(L, lua_source_code, sz, chunkname);
     return Variant(L, lua_gettop(L));
 }

@@ -106,7 +106,12 @@ class Lua
 	*/
     Table registry() const;
 
-	Variant compile(const char* lua_source_code);
+	/*
+		Prepares a Lua Chunk for execution.
+		`lua_source_code`: Lua source code or bytecode (The bytecode part does not work yet for some reason).
+		`chunkname`: The name of this chunk for debugging purposes.
+	*/
+	Variant compile(const char* lua_source_code, const char* chunkname="");
 
     operator lua_State*();
 

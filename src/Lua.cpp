@@ -24,11 +24,7 @@ ThreadStatus Lua::get_status()const
     }
     return r;
 }
-Variant Lua::compile(const char *lua_source_code)
-{
-    luaL_loadstring(L, lua_source_code);
-    return Variant(L, lua_gettop(L));
-}
+
 Stack Lua::stack() const
 {
     return Stack(L);

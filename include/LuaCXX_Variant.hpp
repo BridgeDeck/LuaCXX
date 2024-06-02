@@ -124,6 +124,13 @@ class Variant
 		_tmp_args.push_back(v);
 		return pcall(err_handler, error_code, a...);
 	}
+
+	/*
+		If this variant is a function that was compiled from Lua source code
+		via Lua::compile, this will return Bytecode that can be stored elsewhere
+		and reused.
+	*/
+	void dump(std::vector<char>& into);
     protected:
 
 	std::vector<Variant> _tmp_args;

@@ -22,7 +22,7 @@ int main()
         Lua lua = Lua(L);
 
         int err_code;
-        lua.compile("totally_legit_class.property()")
+        lua.compile("totally_legit_class.property()", "Error Testing")
             .pcall(lua.new_function(_errhandler), err_code);
         ASSERT(something_went_wrong, 
             "Something is supposed to go wrong, thats the point!");

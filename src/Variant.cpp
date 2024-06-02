@@ -1,5 +1,9 @@
 #include "LuaCXX.hpp"
 #include "LuaCXX_Common.hpp"
+#include <cstddef>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <vector>
 
 using namespace LuaCXX;
@@ -87,8 +91,6 @@ std::vector<Variant> Variant::call()
 
 std::vector<Variant> Variant::call(std::vector<Variant> args)
 {
-    if (get_type()!=VariantType::FUNCTION)
-        return {};
     
     std::vector<Variant> r = {};
     lua_pushvalue(L, stack_index);
@@ -114,8 +116,6 @@ std::vector<Variant> Variant::pcall(Variant errhandler, int& error_code_out)
 
 std::vector<Variant> Variant::pcall(Variant errhandler, int& error_code_out, std::vector<Variant> args)
 {
-    if (get_type()!=VariantType::FUNCTION)
-        return {};
     
     std::vector<Variant> r = {};
     lua_pushvalue(L, stack_index);
@@ -123,8 +123,10 @@ std::vector<Variant> Variant::pcall(Variant errhandler, int& error_code_out, std
 
     for (auto i = args.begin();i!=args.end();i++)
         lua_pushvalue(L, i->stack_index);
-    
-    error_code_out = lua_pcall(L, args.size(), LUA_MULTRET, errhandler.stack_index);
+    int hfunc_index = errhandler.stack_index;
+    if (errhandler.get_type()!=VariantType::FUNCTION)
+        hfunc_index=0;
+    error_code_out = lua_pcall(L, args.size(), LUA_MULTRET, hfunc_index);
     while (lua_type(L, results)!=LUA_TNONE)
     {
         r.push_back(Variant(L, results));
@@ -132,6 +134,21 @@ std::vector<Variant> Variant::pcall(Variant errhandler, int& error_code_out, std
     }
     return r;
 }
+
+int _dump_writer(lua_State*L, const void* chunk, size_t sz, void* ud)
+{
+    std::vector<char>* into = (std::vector<char>*)ud;
+
+    for (size_t i=0;i<sz;i++)
+        into->push_back(((const char*)chunk)[i]);
+
+    return 0;
+}
+void Variant::dump(std::vector<char>& into)
+{
+    lua_dump(L, _dump_writer, &into);
+}
+
 lua_State* Variant::get_lua() const
 {
     return L;

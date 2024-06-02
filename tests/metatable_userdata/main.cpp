@@ -54,7 +54,7 @@ int main()
             .rawset(lua.new_string("ext_component"), comp);
         lua.compile(
             "print(ext_component.to_display)\n"
-        ).call();
+        , "UserdataTestChunk").call();
 
     }
     lua_close(L);

@@ -52,7 +52,7 @@ int main()
         lua.globals()
             .rawset(lua.new_string("human"), lib_table);
 
-        Variant lua_program = lua.compile(lua_source_code);
+        Variant lua_program = lua.compile(lua_source_code, "Library Creation Test");
         lua_program.call();
 
     }

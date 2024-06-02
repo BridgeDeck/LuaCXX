@@ -21,3 +21,6 @@ add_test(NAME "Creating Userdata's and assigning them metatables" COMMAND metata
 
 add_executable(protected_calls protected_calls/main.cpp)
 add_test(NAME "Test out protected calls" COMMAND protected_calls)
+
+add_executable(compile_and_dump compile_and_dump/main.cpp)
+add_test(NAME "Testing compiling and dumping Lua chunks" COMMAND compile_and_dump)
