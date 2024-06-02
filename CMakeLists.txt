@@ -30,10 +30,15 @@ set (SRC_FILES
 )
 
 set (INC_FILES
-	include/LuaCXX.hpp
 	include/LuaCXX_Common.hpp
-	include/LuaCXX_Thread.hpp
+	include/LuaCXX_Lua.hpp
+	include/LuaCXX_Stack.hpp
+	include/LuaCXX_String.hpp
 	include/LuaCXX_Table.hpp
+	include/LuaCXX_Thread.hpp
+	include/LuaCXX_Userdata.hpp
+	include/LuaCXX_Variant.hpp
+	include/LuaCXX.hpp
 )
 
 include_directories(${LUA_INCLUDE_DIR})
@@ -43,3 +48,6 @@ add_library(${PROJECT_NAME} STATIC ${SRC_FILES})
 
 include(CTest)
 add_subdirectory(tests)
+
+install(TARGETS ${PROJECT_NAME} DESTINATION lib/)
+install(FILES ${INC_FILES} DESTINATION include/)
