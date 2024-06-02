@@ -104,3 +104,9 @@ int _get_team_points(lua_State* L)
         return stack._return(luacxx.new_nil()); // Returns a nil
 }
 ```
+
+Compile Lua source code and run it. (in protected mode)
+```cpp
+int err;
+luacxx.compile("print(\"Hello World!\")", "My Lua Code").pcall(luacxx.new_nil(), err); 
+```
