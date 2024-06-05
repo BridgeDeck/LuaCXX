@@ -1,7 +1,7 @@
-#ifndef LuaCXX_VERSION_FILE
- #define LuaCXX_VERSION_FILE
- #define LUACXX_MAJOR 2
- #define LUACXX_MINOR 0
- #endif
- 
+#ifndef LuaCXX_VERSION_HPP
+#define LuaCXX_VERSION_HPP
 
+#define LUACXX_MAJOR 2
+#define LUACXX_MINOR 0
+
+#endif

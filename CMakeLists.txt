@@ -38,6 +38,7 @@ set (INC_FILES
 	include/LuaCXX_Thread.hpp
 	include/LuaCXX_Userdata.hpp
 	include/LuaCXX_Variant.hpp
+	include/LuaCXX_Version.hpp
 	include/LuaCXX.hpp
 )
 
