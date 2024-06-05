@@ -152,7 +152,7 @@ class Lua
 	 * @warning Not compatible with Lua 5.2 and later, will return a nil.
 	 * @return Table 
 	 */
-	Table environment() const;
+	Table environment();
 
 	#endif // LUA_VERSION_NUM > 501
 

@@ -30,3 +30,6 @@ add_test(NAME "Call a function defined in Lua and get its return" COMMAND call_l
 
 add_executable(iterate_table iterate_table/main.cpp)
 add_test(NAME "Iterate through a table" COMMAND iterate_table)
+
+add_executable(function_env function_env/main.cpp)
+add_test(NAME "Set the environment of a function" COMMAND function_env)

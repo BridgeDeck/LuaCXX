@@ -179,12 +179,19 @@ class Variant
 		return pcall(err_handler, error_code, a...);
 	}
 
-	/*
-		
+	/**
+	 * @brief Get this variant's environment, if it has one.
+	 * 
+	 * @return Table 
+	 */
+	Table get_environment() const;
 
-		! **THIS DOES NOT REALLY WORK YET.**
-	*/
-
+	/**
+	 * @brief Set this variant's environment, if it can have one.
+	 * 
+	 * @param env 
+	 */
+	void set_environment(Table& env);
 	/**
 	 * @brief If this points to a chunk, this will dump it as bytecode.
 	 * @warning DOES NOT WORK YET.

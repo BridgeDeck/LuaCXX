@@ -17,7 +17,11 @@ Table Lua::registry() const
     return Table(L, LUA_REGISTRYINDEX);
 }
 
-Table Lua::environment() const
+Table Lua::environment()
 {
+    #if LUA_VERSION_NUM > 501
+    return (Table)new_nil();
+    #else
     return Table(L, LUA_ENVIRONINDEX);
+    #endif
 }

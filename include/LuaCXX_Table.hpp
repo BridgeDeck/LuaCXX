@@ -21,6 +21,7 @@ namespace LuaCXX
 class Table: public Variant
 {
     friend class Lua;
+    friend class Variant;
 
 	protected:
 	Table(lua_State* lua, int stack_index);
