@@ -27,3 +27,6 @@ add_test(NAME "Testing compiling and dumping Lua chunks" COMMAND compile_and_dum
 
 add_executable(call_lua_function call_lua_function/main.cpp)
 add_test(NAME "Call a function defined in Lua and get its return" COMMAND call_lua_function)
+
+add_executable(iterate_table iterate_table/main.cpp)
+add_test(NAME "Iterate through a table" COMMAND iterate_table)

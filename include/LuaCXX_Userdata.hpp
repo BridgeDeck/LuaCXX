@@ -1,3 +1,13 @@
+/**
+ * @file LuaCXX_String.hpp
+ * @author BridgeDeck (littlefast2@gmail.com)
+ * @brief Header file for containing the `LuaCXX::Userdata` and `LuaCXX::LightUserdata` classes.
+ * @version 1.0
+ * @date 2024-06-05
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #ifndef LuaCXX_Userdata_HPP
 #define LuaCXX_Userdata_HPP
 
@@ -7,9 +17,11 @@
 namespace LuaCXX
 {
 
-/*
-	Handle to a Lua userdata.
-*/
+/**
+ * @brief Handle to a Userdata that represents `T`.
+ * 
+ * @tparam T 
+ */
 template<class T>
 class Userdata:public Variant
 {
@@ -30,9 +42,11 @@ class Userdata:public Variant
 
 	}
 };
-/*
-	Handle to a Lua light userdata.
-*/
+/**
+ * @brief Handle to a LightUserdata that represents `T`.
+ * 
+ * @tparam T 
+ */
 template<class T>
 class LightUserdata:public Variant
 {

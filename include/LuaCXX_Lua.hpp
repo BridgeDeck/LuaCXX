@@ -1,67 +1,112 @@
+/**
+ * @file LuaCXX_Lua.hpp
+ * @author BridgeDeck (littlefast2@gmail.com)
+ * @brief Header file for containing the `LuaCXX::Lua` class
+ * @version 1.0
+ * @date 2024-06-04
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
 #ifndef LuaCXX_Lua_HPP
 #define LuaCXX_Lua_HPP
 
 #include "LuaCXX_Common.hpp"
 #include "LuaCXX_Variant.hpp"
+#include "lua.h"
 
 namespace LuaCXX
 {
-/*
-    Wraps around a `lua_State*` to make it easier to use Lua from C++. 
-*/
+/**
+ * @brief A wrapper for making Lua easier to work with.
+ * Simply wrap it around a `lua_State*` and you are good to go.
+ */
 class Lua
 {
 	public:
+	/**
+	 * @brief Construct a new Lua instance from a raw `lua_State*`
+	 * 
+	 * @param from 
+	 */
 	Lua(lua_State* from);
 
-	/*
-		Get the status of this thread, see `ThreadStatus` for more details.
-	*/
+	/**
+	 * @brief Get the status of this Lua thread (Unused for now)
+	 * 
+	 * @return ThreadStatus 
+	 */
 	ThreadStatus get_status() const;
 
-	/*
-		Get a handle to the Lua stack, see `Stack` for more information.
-	*/
+	/**
+	 * @brief Get a handle to the Stack.
+	 * 
+	 * @return Stack 
+	 */
 	Stack stack() const;
 
-	/*
-		Create a new string.
-	*/
-	String new_string(const char* my_str);
+	/**
+	 * @brief Create a new string.
+	 * 
+	 * @param str : The standard string to create this string from.
+	 * @return String : Handle to the new string.
+	 */
+	String new_string(const char* str);
 
-	/*
-		Create a new empty table.
-	*/
+	/**
+	 * @brief Create a new empty table
+	 * 
+	 * @return Table : Handle to the new table
+	 */
     Table new_table();
 
-	/*
-		Create a new thread
-	*/
+	/**
+	 * @brief Create a new thread.
+	 * 
+	 * @return Thread : handle to the new thread.
+	 */
 	Thread new_thread();
 
-	/*
-		Create a new nil value.
-	*/
+	/**
+	 * @brief Create a new nil value.
+	 * 
+	 * @return Variant : Handle to the new value.
+	 */
 	Variant new_nil();
 
-	/*
-		Create a new number value.
-	*/
+	/**
+	 * @brief Create a new number value.
+	 * 
+	 * @param n : Number to create this value from.
+	 * @return Variant 
+	 */
 	Variant new_number(double n);
 
-	/*
-		Create a new boolean value.
-	*/
+	/**
+	 * @brief Create a new boolean value.
+	 * 
+	 * @param b : Boolean to create this value from.
+	 * @return Variant 
+	 */
 	Variant new_boolean(bool b);
 
-	/*
-		Create a new Lua C Function handle
-	*/
+	/**
+	 * @brief Create a new Lua CFunction.
+	 * 
+	 * @param f : Pointer to a valid lua_CFunction.
+	 * @return Variant 
+	 */
 	Variant new_function(lua_CFunction f);
 
-	/*
-		Creates a Lua Userdata for `T` and initializes it with `args`.
-	*/
+	/**
+	 * @brief Initializes a new `T` instance as a Lua userdata.
+	 * 
+	 * @tparam T : The class to create a Userdata from.
+	 * @tparam InitArgs : See `args`.
+	 * @param args : Arguments for initializing `T`.
+	 * @return Userdata<T> 
+	 */
 	template<class T, class... InitArgs>
 	Userdata<T> new_userdata(InitArgs... args)
 	{
@@ -70,9 +115,13 @@ class Lua
 		return Variant(L, lua_gettop(L));
 	}
 
-	/*
-		Creates a Lua Userdata for `T` and initializes it with an existing `T`.
-	*/
+	/**
+	 * @brief Create a Userdata based on an existing instance of `T`
+	 * 
+	 * @tparam T : The class to create a Userdata from.
+	 * @param from : Reference to an existing instance of `T`.
+	 * @return Userdata<T> 
+	 */
 	template<class T>
 	Userdata<T> create_userdata(T& from)
 	{
@@ -81,9 +130,13 @@ class Lua
 		return Variant(L, lua_gettop(L));
 	}
 
-	/*
-		Creates a Lua Light Userdata pointing to `lud`.
-	*/
+	/**
+	 * @brief Create a Light Userdata
+	 * 
+	 * @tparam T : The class to create a Light Userdata from.
+	 * @param lud : Pointer to an instance of `T`.
+	 * @return LightUserdata<T> 
+	 */
 	template<class T>
 	LightUserdata<T> new_light_userdata(T* lud)
 	{
@@ -91,31 +144,52 @@ class Lua
 		return Variant(L, lua_gettop(L));
 	}
 
-	/*
-		This thread's environment
-	*/
+	// Code for Lua 5.1 and LuaJIT only
+	#if !(LUA_VERSION_NUM > 501)
+
+	/**
+	 * @brief Returns this thread's environment table.
+	 * @warning Not compatible with Lua 5.2 and later, will return a nil.
+	 * @return Table 
+	 */
 	Table environment() const;
 
-	/*
-		The Lua globals table
-	*/
+	#endif // LUA_VERSION_NUM > 501
+
+	/**
+	 * @brief Returns Lua's global table.
+	 * 
+	 * @return Table 
+	 */
     Table globals() const;
 
-	/*
-		The Lua registry table
-	*/
+	/**
+	 * @brief Returns Lua's registry table.
+	 * 
+	 * @return Table 
+	 */
     Table registry() const;
 
-	/*
-		Prepares a Lua Chunk for execution.
-		`lua_source_code`: Lua source code or bytecode (The bytecode part does not work yet for some reason).
-		`chunkname`: The name of this chunk for debugging purposes.
-	*/
+	/**
+	 * @brief Creates a Lua chunk from Lua source code.
+	 * 
+	 * @param lua_source_code : Text containing Lua source code.
+	 * @param chunkname : A human-readable name for debugging purposes.
+	 * @return Variant : Can be called as a function using `Variant::call` or `Variant::pcall`.
+	 */
 	Variant compile(const char* lua_source_code, const char* chunkname="");
 
+	/**
+	 * @brief Get the wrapped `lua_State*`.
+	 * 
+	 * @return lua_State* 
+	 */
     operator lua_State*();
 
 	private:
+	/** @internal
+	 * @brief The Lua state, where all the magic of Lua happens.
+	 */
 	lua_State* L;
 
    };

@@ -1,3 +1,13 @@
+/**
+ * @file LuaCXX_String.hpp
+ * @author BridgeDeck (littlefast2@gmail.com)
+ * @brief Header file for containing the `LuaCXX::Variant` class.
+ * @version 1.0
+ * @date 2024-06-05
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #ifndef LuaCXX_Variant_HPP
 #define LuaCXX_Variant_HPP
 
@@ -5,9 +15,9 @@
 #include <vector>
 namespace LuaCXX
 {
-/*
-	Handle to a value on the Lua stack.
-*/
+/**
+ * @brief General-purpose handle to a value on the Lua stack.
+ */
 class Variant
 {
     friend class Lua;
@@ -17,6 +27,13 @@ class Variant
     Variant(lua_State* th, int index);
 
     public:
+	Variant();
+
+	/**
+	 * @brief Get the type of value this variant is.
+	 * 
+	 * @return VariantType 
+	 */
     VariantType get_type() const;
 	
 	/**
@@ -39,85 +56,122 @@ class Variant
 		return *((LightUserdata<T>*)this);
 	}
 	
+	/**
+	 * @brief Get the `lua_State*` that this variant exists on.
+	 * 
+	 * @return lua_State* 
+	 */
 	lua_State* get_lua() const;
 	/*
 	 * Metatable operations
 	 * */
 
-	/*
-		Set the metatable of this value, if it can have one.
-	*/
+	/**
+	 * @brief Set the metatable of this value, if it can have one.
+	 * 
+	 * @param mt : Table containing metamethods.
+	 */
 	void set_metatable(Table mt);
 
-	/*
-		Get the metatable of this value, if it has one.
-	*/
+	/**
+	 * @brief Get the metatable of this value, if it has one.
+	 * 
+	 * @return Table : Table containing metamethods.
+	 */
 	Table get_metatable() const;
 
-	/*
-		Set the key `K` to value `V`.
-		May trigger this value's `"__newindex"` metamethod if it has one.
-	*/
+	/**
+	 * @brief Set the key `K` to value `V`.
+	 * May trigger this value's `"__newindex"` metamethod if it has one.
+	 *
+	 * @param K
+	 * @param V
+	 */
 	void set(Variant K, Variant V);
 
-	/*
-		Set the key `K` to value `V`.
-		Will not trigger metamethods.
-	*/
+	/**
+	 * @brief Set the key `K` to value `V` without triggering metamethods.
+	 * 
+	 * @param K 
+	 * @param V 
+	 */
 	void rawset(Variant K, Variant V);
 
-	/*
-		Get a value from key `K`.
-		May trigger this value's `"__index"` metamethod if it has one.
-	*/
+	/**
+	 * @brief Get a value from key `K`.
+	 * 
+	 * @param K 
+	 * @return Variant 
+	 */
 	Variant get(Variant K);
 
-	/*
-		Get a value from key `K`.
-		Will not trigger metamethods.
-	*/
+	/**
+	 * @brief Get a value from key `K` without triggering metamethods.
+	 * 
+	 * @param K 
+	 * @return Variant 
+	 */
 	Variant rawget(Variant K) const;
 
-	/*
-		Calls this value as a function or using the `"__call"` metamethod
-		with the following `arguments`.
-	*/
+	/**
+	 * @brief Calls this value as a function.
+	 * 
+	 * @param arguments 
+	 * @return std::vector<Variant> 
+	 */
 	std::vector<Variant> call(std::vector<Variant> arguments);
 
-	/*
-		Calls this value as a function or using the `"__call"` metamethod
-		with the following arguments.
-	*/
+	/**
+	 * @brief Calls this value as a function.
+	 * 
+	 * @tparam Args 
+	 * @param v 
+	 * @param a 
+	 * @return std::vector<Variant> 
+	 */
 	template<class... Args>
 	std::vector<Variant> call(Variant v, Args... a )
 	{
 		_tmp_args.push_back(v);
 		return call(a...);
 	}
-	/*
-		Calls this value as a function or using the `"__call"` metamethod
-		with `_tmp_args` as its arguments.
-		Used internally.
-	*/
+
+	/**
+	 * @brief Calls this value as a function.
+	 * 
+	 * @return std::vector<Variant> 
+	 */
 	std::vector<Variant> call();
 
-	/*
-		Calls this value as a function or using the `"__call"` metamethod (in protected mode)
-		with `_tmp_args` as its arguments.
-		Used internally.
-	*/
+	/**
+	 * @brief Calls this value as a function in protected mode.
+	 * 
+	 * @param err_handler Handle to a function that handles errors.
+	 * @param error_code Where to put an error code.
+	 * @return std::vector<Variant> 
+	 */
 	std::vector<Variant> pcall(Variant err_handler, int& error_code);
 	
-	/*
-		Calls this value as a function or using the `"__call"` metamethod (in protected mode)
-		with the following `arguments`.
-	*/
+	/**
+	 * @brief Calls this value as a function in protected mode.
+	 * 
+	 * @param err_handler Handle to a function that handles errors.
+	 * @param error_code Where to put an error code.
+	 * @param arguments 
+	 * @return std::vector<Variant> 
+	 */
 	std::vector<Variant> pcall(Variant err_handler, int& error_code, std::vector<Variant> arguments);
 
-	/*
-		Calls this value as a function or using the `"__call"` metamethod (in protected mode)
-		with the following arguments.
-	*/
+	/**
+	 * @brief Calls this value as a function in protected mode.
+	 * 
+	 * @tparam Args 
+	 * @param err_handler Handle to a function that handles errors.
+	 * @param error_code Where to put an error code.
+	 * @param v 
+	 * @param a 
+	 * @return std::vector<Variant> 
+	 */
 	template<class... Args>
 	std::vector<Variant> pcall(Variant err_handler, int& error_code, Variant v, Args... a )
 	{
@@ -126,16 +180,46 @@ class Variant
 	}
 
 	/*
-		If this variant is a function that was compiled from Lua source code
-		via Lua::compile, this will return Bytecode that can be stored elsewhere
-		and reused.
+		
+
+		! **THIS DOES NOT REALLY WORK YET.**
 	*/
+
+	/**
+	 * @brief If this points to a chunk, this will dump it as bytecode.
+	 * @warning DOES NOT WORK YET.
+	 * @param into 
+	 */
 	void dump(std::vector<char>& into);
+
+	/**
+	 * @brief Iterates to the next element in this variant based on `key`.
+	 * 
+	 * @param key 
+	 * @param value 
+	 * @return true : Can continue iterating.
+	 * @return false : Reached the end of the table.
+	 */
+	bool next(Variant& key, Variant& value);
+
     protected:
 
+	/** @internal
+	 * @brief A temporary buffer for storing `call` or `pcall` arguments.
+	 * 
+	 */
 	std::vector<Variant> _tmp_args;
 
+	/** @internal
+	 * @brief Lua's wacky funhouse of magic.
+	 * 
+	 */
     lua_State* L;
+
+	/** @internal
+	 * @brief The position that the value this variant points to on the Lua stack.
+	 * 
+	 */
     int stack_index;
 };
 }

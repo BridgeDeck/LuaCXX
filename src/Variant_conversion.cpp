@@ -39,7 +39,5 @@ Variant::operator Thread()
 }
 Variant::operator lua_CFunction()
 {
-    if (lua_type(L, stack_index) != LUA_TFUNCTION)
-        return 0;
     return lua_tocfunction(L, stack_index);
 }

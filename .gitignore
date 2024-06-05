@@ -1,3 +1,7 @@
 .cache/
 build/
 
+docs/
+
+lualib/*
+!lualib/Makefile

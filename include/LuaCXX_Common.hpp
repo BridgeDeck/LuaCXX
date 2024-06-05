@@ -1,3 +1,14 @@
+/**
+ * @file LuaCXX_Common.hpp
+ * @author BridgeDeck (littlefast2@gmail.com)
+ * @brief A header file for containing forward declarations and constants/enumerations.
+ * @version 1.0
+ * @date 2024-06-04
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
 #ifndef LuaCXX_Common_HPP
 #define LuaCXX_Common_HPP
 
@@ -11,9 +22,10 @@ extern "C"
 namespace LuaCXX
 {
 
-/*
-    The type of Lua value that a Variant is.
-*/
+/**
+ * @brief Enumeration for the type of a Variant.
+ * Corresponds to the type a value on the Lua stack can be.
+ */
 typedef enum VariantType{
     BOOLEAN=LUA_TBOOLEAN,
     NUMBER=LUA_TNUMBER,
@@ -27,21 +39,18 @@ typedef enum VariantType{
     NONE=LUA_TNONE
 } VariantType;
 
-/*
-    Status of a running thread.
-    `Yield`: This thread is yielding and has not finished.
-    `Ended`: This thread has finished.
-    `Error`: This thread finished prematurely with an error.
-*/
+/**
+ * @brief Status of a thread (Unused for now)
+ */
 typedef enum ThreadStatus{
 	Yield,
 	Ended,
 	Error
 } ThreadStatus;
 
-/*
-    Forward declarations
-*/
+/**************************
+ *  Forward Declarations  *
+ **************************/
 
 class Lua;
 class Variant;

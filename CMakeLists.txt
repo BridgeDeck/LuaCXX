@@ -51,3 +51,6 @@ add_subdirectory(tests)
 
 install(TARGETS ${PROJECT_NAME} DESTINATION lib/)
 install(FILES ${INC_FILES} DESTINATION include/)
+if (IS_DIRECTORY ${PROJECT_SOURCE_DIR}/docs/)
+	install(DIRECTORY docs/ DESTINATION .)
+endif()

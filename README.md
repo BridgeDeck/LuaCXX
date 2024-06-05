@@ -2,7 +2,6 @@
 
 This is a C++ library that makes it easier to use Lua by providing an intuitive abstraction over the Lua state. Allowing you to easily put it into any existing project that integrates Lua.
 
-**This library is still very much in the works, it lacks access to many Lua's most useful features.**
 
 ## Does it work on version *?
 
@@ -27,11 +26,16 @@ lua_State* L = luaL_newstate();
 Lua luacxx = Lua(L); // Use LuaCXX from here
 ```
 
-Lua's globals, registry and environment tables are available as plain Tables.
+Lua's globals and registry tables are available as plain Tables.
 ```cpp
 luacxx.globals();
-luacxx.environment();
 luacxx.registry();
+```
+
+Compile Lua source code and run it. (in protected mode)
+```cpp
+int err;
+luacxx.compile("print(\"Hello World!\")", "My Lua Code").pcall(luacxx.new_nil(), err); 
 ```
 
 Create a table and set its properties
@@ -51,6 +55,17 @@ Player.get(luacxx.new_string("Health"));
 
 // get properties without invoking metamethods using Variant::rawget
 Player.rawget(luacxx.new_string("CurrentWeapon"))
+```
+
+Iterate through the contents of a table.
+```cpp
+Variant key;
+Variant value;
+
+while(Player.next(key, value))
+{
+    // Do something with `key` or `value`
+}
 ```
 
 Create a metatable and assign it to the above table
@@ -105,8 +120,3 @@ int _get_team_points(lua_State* L)
 }
 ```
 
-Compile Lua source code and run it. (in protected mode)
-```cpp
-int err;
-luacxx.compile("print(\"Hello World!\")", "My Lua Code").pcall(luacxx.new_nil(), err); 
-```

@@ -8,6 +8,12 @@
 
 using namespace LuaCXX;
 
+Variant::Variant()
+{
+    L=0;
+    stack_index=0;
+}
+
 Variant::Variant(lua_State* lua, int index)
 {
     stack_index = index;
@@ -147,6 +153,32 @@ int _dump_writer(lua_State*L, const void* chunk, size_t sz, void* ud)
 void Variant::dump(std::vector<char>& into)
 {
     lua_dump(L, _dump_writer, &into);
+}
+
+bool Variant::next(Variant& key, Variant& value)
+{
+    if (!key.L)
+        key.L = L;
+    if (!value.L)
+        value.L = L;
+
+    if (value.stack_index == lua_gettop(L))
+        lua_pop(L, 1);
+    if (key.stack_index==0)
+        lua_pushnil(L);
+    else if (key.stack_index < lua_gettop(L))
+        lua_pushvalue(L, key.stack_index);
+
+    
+    int r = lua_next(L, stack_index);
+
+    key.stack_index = lua_gettop(L)-1;
+    value.stack_index = lua_gettop(L);
+
+    if (r==0)
+        return false;
+    else
+        return true;
 }
 
 lua_State* Variant::get_lua() const

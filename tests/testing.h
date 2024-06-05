@@ -128,7 +128,6 @@ void init_print_function(lua_State*L)
     return code;
 
 #define ASSERT(condition, error_message) \
-    std::cout<<YEL<<__FILE__<<":"<<__LINE__<<" : "<< #condition <<std::endl; \
     if (!(condition)) { \
         std::cout<<RED<<__FILE__<<":"<<__LINE__<<" : "<<error_message<<COLOR_RESET<<std::endl; \
         code = 1; \
