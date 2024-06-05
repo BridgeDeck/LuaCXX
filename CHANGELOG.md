@@ -7,72 +7,51 @@ Current Date : 05/06/2024
 ### Changed files
 
 #### Changed `tests/CMakeLists.txt`
-Added new test, see `tests/iterate_table/main.cpp`
-
-#### Changed `tests/testing.h`
-Removed unnecessary code
+Added a new test, see `tests/function_env/main.cpp`.
 
 ### Added files
 
-#### Added `tests/iterate_table/main.cpp`
-Program file for new test meant to test iteration through a Lua table.
+#### Added `tests/function_env/main.cpp`
+A Program file for a test to test out changing a functions environment table.
 
 ## `src/`
 
 ### Changed files
 
-#### Changed `src/Variant.cpp`
-See `include/LuaCXX_Variant.hpp`
+#### Changed `src/Lua_pseudotables.cpp`
+Added a check so that if the current Lua version is not 5.1, `Lua::environment` will return a nil value.
 
-#### Changed `src/Variant_conversion.cpp`
-Ever so slightly optimized
+### Added files
+
+#### Added `src/Variant_env.cpp`
+A file specifically for containing methods that set and get Variant's environment table.
 
 ## `include/`
 
 ### Changed files
 
-#### Changed `include/LuaCXX.hpp`
-- Updated documentation
-- Now includes `include/LuaCXX_Version.hpp`
-#### Changed `include/LuaCXX_Common.hpp`
-- Updated documentation
 #### Changed `include/LuaCXX_Lua.hpp`
-- Updated documentation
-#### Changed `include/LuaCXX_Stack.hpp`
-- Updated documentation
-#### Changed `include/LuaCXX_String.hpp`
-- Updated documentation
+Made `Lua::environment` non-const.
+
 #### Changed `include/LuaCXX_Table.hpp`
-- Updated documentation
-#### Changed `include/LuaCXX_Thread.hpp`
-- Updated documentation
-#### Changed `include/LuaCXX_Userdata.hpp`
-- Updated documentation
+Gave `Table` a new friend, `Variant`.
 
 #### Changed `include/LuaCXX_Variant.hpp`
-- Updated documentation
-- Can now initialize empty an `Variant`, this is meant for using `Variant::next`
-- `Variant::next` can now be used to iterate through a variant.
+Added new methods `get_environment` and `set_environment` for getting and setting the environment of a Variant.
 
-#### Added `include/LuaCXX_Version.hpp`
+### Added files
+
 
 ## Other
 
 ### Changed files
 
-#### Changed `.gitignore`
-- More ignore
-
 #### Changed `CMakeLists.txt`
-- Will now detect if a `docs/` directory has been build via `make docs` when installing the project.
+Added `src/Variant_env.cpp` as a source file
 
-#### Changed `README.md`
-- Updated code samples.
+#### Changed `Makefile`
+Removed some junk dependencies and fixed an issue where not enough arguments are passed into changelog_gen.lua.
 
 ### Added files
 
-#### Added `Doxyfile`
-Doxygen configuration file.
 
-#### Added `changelog_gen.lua`
-This is a lua script that was used to generate this very changelog file. Meant to speed up the process of documenting changes by providing a convenient template.
