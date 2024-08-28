@@ -29,10 +29,11 @@ DOCS_DIR=docs/
 
 default: test build
 
-build: ${INCLUA} ${CMAKE_BUILDFLAGS} ${CMAKE_BIN} ${CMAKE}
+build: ${INCLUA} ${CMAKE_BUILDFLAGS} ${CMAKE_BIN} ${CMAKE} ${CMAKE_GENFLAGS} 
+	${CMAKE} --build ${CMAKE_BIN} -t LuaCXX ${CMAKE_BUILDFLAGS}
+build_tests: ${INCLUA} ${CMAKE_BUILDFLAGS} ${CMAKE_BIN} ${CMAKE} ${CMAKE_GENFLAGS} 
 	${CMAKE} --build ${CMAKE_BIN} ${CMAKE_BUILDFLAGS}
-
-test: build ${LIBLUA} ${CTEST} ${CTEST_FLAGS}
+test: build ${LIBLUA} ${CTEST} ${CTEST_FLAGS} build_tests
 	cd ${CMAKE_BIN} && ${CTEST} ${CTEST_FLAGS}
 
 install: ${CMAKE_BIN} build ${CMAKE}
@@ -46,7 +47,7 @@ clean:
 	rm -rf ${CMAKE_BIN}
 	rm -rf ${DOCS_DIR}
 
-.PHONY: default test build docs changelog \
+.PHONY: default test build docs changelog build_tests \
 	${CMAKE_GENFLAGS} ${CMAKE_GENERATOR} ${CMAKE_BUILDFLAGS} ${CMAKE_BUILD_TYPE} \
 	${DOXYGEN_OVERRIDES} ${CTEST_FLAGS} ${PROJECT_MAJ} ${PROJECT_MIN}
 

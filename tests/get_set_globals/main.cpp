@@ -111,6 +111,7 @@ int main()
 			
 			delete remote_music_bank;
 		}
+		// FIXME: There is a strange thing with Lua 5.1 where it throws a segfault when setting this function
 		// test setting functions
 		{
 			struct f{

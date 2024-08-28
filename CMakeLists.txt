@@ -46,6 +46,8 @@ set (INC_FILES
 include_directories(${LUA_INCLUDE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
+add_compile_definitions(VERBOSE_DEBUG_PRINTING)
+
 add_library(${PROJECT_NAME} STATIC ${SRC_FILES})
 
 include(CTest)
