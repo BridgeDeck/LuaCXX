@@ -28,6 +28,30 @@ class Variant
 
     public:
 	Variant();
+	~Variant();
+
+	Variant(const char*);
+	Variant(bool);
+	Variant(double);
+	
+  template<class T>
+	Variant(T* lud):Variant()
+	{
+		L=luaL_newstate();
+    lua_pushlightuserdata(L, lud);
+    stack_index=lua_gettop(L);
+	}
+  template<class T, typename... Variadic>
+  Variant(Variadic... args)
+  {
+    L=luaL_newstate();
+    lua_newuserdata(L, sizeof(T));
+    stack_index=lua_gettop(L);
+
+    (*(T*)lua_touserdata(L, stack_index))=T(args...);
+  }
+
+
 
 	/**
 	 * @brief Get the type of value this variant is.
