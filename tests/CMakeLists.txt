@@ -33,3 +33,6 @@ add_test(NAME "Iterate through a table" COMMAND iterate_table)
 
 add_executable(function_env function_env/main.cpp)
 add_test(NAME "Set the environment of a function" COMMAND function_env)
+
+add_executable(across_states across_states/main.cpp)
+add_test(NAME "Exchange values across seperately created Lua states" COMMAND function_env)
