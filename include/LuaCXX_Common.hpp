@@ -63,6 +63,9 @@ template<class T>
 class LightUserdata;
 template<class T>
 class Userdata;
+// Function
+typedef void (*Function)(Lua& L, Stack arguments, std::vector<Variant> returns);
+
 
 }
 #endif
