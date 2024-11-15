@@ -247,6 +247,8 @@ class Variant
 	 */
     lua_State* L;
 
+bool is_state_internal;
+
 	/** @internal
 	 * @brief The position that the value this variant points to on the Lua stack.
 	 * 
