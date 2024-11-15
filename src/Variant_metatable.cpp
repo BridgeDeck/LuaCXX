@@ -7,10 +7,12 @@ void Variant::set_metatable(Table mt)
 {
     if (
         get_type()!=VariantType::TABLE &&
-        get_type()!=VariantType::USERDATA
+        get_type()!=VariantType::USERDATA &&
+        get_type()!=VariantType::LIGHTUSERDATA
     )
         return;
-    lua_pushvalue(L, mt.stack_index);
+    // lua_pushvalue(L, mt.stack_index);
+    mt.copyvalue_into(L);
     lua_setmetatable(L, stack_index);
 }
 

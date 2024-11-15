@@ -14,6 +14,7 @@ void Variant::set_environment(Table &env)
 {
     if (env.get_type() != TABLE)
         return;
-    lua_pushvalue(L, env.stack_index);
+    // lua_pushvalue(L, env.stack_index);
+    env.copyvalue_into(L);
     lua_setfenv(L, stack_index);
 }
