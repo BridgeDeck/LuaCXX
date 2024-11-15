@@ -10,6 +10,6 @@
     func;
 #else
 #define DBG(message)
-#define DBGf(func)
+#define DBGF(func) func
 #endif
 #endif
