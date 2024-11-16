@@ -30,9 +30,10 @@ class Variant
 	Variant();
 	~Variant();
 
-	Variant(const char*);
-	Variant(bool);
-	Variant(double);
+	// Variant(const char*);
+	// Variant(bool);
+	// Variant(double);
+	// Variant(lua_CFunction);
 	
   template<class T>
 	Variant(T* lud):Variant()
