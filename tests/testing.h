@@ -8,8 +8,8 @@ int _lua_print_func(lua_State* L)
 {
     using namespace LuaCXX;
     Lua lua = Lua(L);
-    Stack stack = lua.stack();
-    std::vector<Variant> args = stack.as_array();
+    // Stack stack = lua.stack();
+    std::vector<Variant> args = lua.get_stack_as_array();
 
     for (auto i = args.begin();i!=args.end();i++)
     {

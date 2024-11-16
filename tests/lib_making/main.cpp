@@ -18,18 +18,18 @@ const char* lua_source_code=
 int _lua_human_shoot(lua_State*L)
 {
     Lua lua = Lua(L);
-    return lua.stack()._return(lua.new_string("Bang Bang Bang!"));
+    return lua.return_values(lua.new_string("Bang Bang Bang!"));
 }
 
 int _lua_human_sing(lua_State* L)
 {
     Lua lua = Lua(L);
-    return lua.stack()._return(lua.new_string("Pull my devil trigger!"));
+    return lua.return_values(lua.new_string("Pull my devil trigger!"));
 }
 int _lua_human_has_weapon(lua_State* L)
 {
     Lua lua = Lua(L);
-    return lua.stack()._return(lua.new_boolean(true));
+    return lua.return_values(lua.new_boolean(true));
 }
 int main()
 {

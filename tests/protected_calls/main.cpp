@@ -6,7 +6,7 @@ bool something_went_wrong=false;
 int _errhandler(lua_State*L)
 {
     Lua lua = Lua(L);
-    std::vector<Variant> args = lua.stack().as_array();
+    std::vector<Variant> args = lua.get_stack_as_array();
     std::cout << (const char*)(String)args[0]<< std::endl;
     something_went_wrong=true;
     return 0;

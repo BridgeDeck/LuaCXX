@@ -26,15 +26,15 @@ class Component
     static int __index(lua_State* L)
     {
         Lua lua = Lua(L);
-        Userdata<Component> comp = lua.stack()[1];
+        Userdata<Component> comp = lua[1];
         
         std::vector<Variant> r = {} ;
-        if (strcmp((String)lua.stack()[2], "to_display")==0)
+        if (strcmp((String)lua[2], "to_display")==0)
             r.push_back(lua.new_string(comp->to_display));
         else
             r.push_back(lua.new_nil());
 
-        return lua.stack()._return(r);
+        return lua.return_values(r);
     }
     const char* to_display;
 };
