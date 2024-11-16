@@ -1,10 +1,12 @@
 #include "LuaCXX.hpp"
 #include "LuaCXX_Common.hpp"
+#include "Internal.hpp"
 
 using namespace LuaCXX;
 
 void Variant::set_metatable(Table mt)
 {
+    DBG("void Variant::set_metatable(Table mt)");
     if (
         get_type()!=VariantType::TABLE &&
         get_type()!=VariantType::USERDATA &&
@@ -18,6 +20,7 @@ void Variant::set_metatable(Table mt)
 
 Table Variant::get_metatable() const
 {
+    DBG("Table Variant::get_metatable() const");
     lua_getmetatable(L, stack_index);
     return Variant(L, lua_gettop(L));
 }

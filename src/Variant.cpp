@@ -11,6 +11,7 @@ using namespace LuaCXX;
 
 Variant::Variant()
 {
+    DBG("Variant::Variant()")
     L=0;
     stack_index=0;
     is_state_internal=false;
@@ -18,6 +19,7 @@ Variant::Variant()
 
 Variant::Variant(lua_State* lua, int index)
 {
+    DBG("Variant::Variant(lua_State* lua, int index)");
     // L = luaL_newstate();
     // is_state_internal=true;
     // lua_pushvalue(lua, index);
@@ -30,6 +32,7 @@ Variant::Variant(lua_State* lua, int index)
 
 Variant::~Variant()
 {
+    DBG("Variant::~Variant()");
     if (is_state_internal && L!=0)
         lua_close(L);
 }
@@ -71,6 +74,7 @@ Variant::~Variant()
 
 VariantType Variant::get_type() const
 {
+    DBG("VariantType Variant::get_type() const")
     VariantType r = VariantType::NIL;
     switch (lua_type(L, stack_index)) {
         case LUA_TNONE:
@@ -109,6 +113,7 @@ VariantType Variant::get_type() const
 
 Variant Variant::rawget(Variant key) const
 {
+    DBG("Variant Variant::rawget(Variant key) const")
     //key.can_be_nillified = false;
     // lua_pushvalue(L, key.stack_index);
     key.copyvalue_into(L);
@@ -118,6 +123,7 @@ Variant Variant::rawget(Variant key) const
 
 void Variant::rawset(Variant key, Variant value)
 {
+    DBG("void Variant::rawset(Variant key, Variant value)")
     //key.can_be_nillified = false;
     //value.can_be_nillified = false;
     // DBGF(lua_pushvalue(L, key.stack_index));
@@ -129,6 +135,7 @@ void Variant::rawset(Variant key, Variant value)
 
 Variant Variant::get(Variant key)
 {
+    DBG("Variant Variant::get(Variant key)");
     // lua_pushvalue(L, key.stack_index);
     key.copyvalue_into(L);
     lua_gettable(L, stack_index);
@@ -136,6 +143,7 @@ Variant Variant::get(Variant key)
 }
 void Variant::set(Variant key, Variant value)
 {
+    DBG("void Variant::set(Variant key, Variant value)");
     // lua_pushvalue(L, key.stack_index);
     // lua_pushvalue(L, value.stack_index);
     key.copyvalue_into(L);
@@ -145,6 +153,7 @@ void Variant::set(Variant key, Variant value)
 
 std::vector<Variant> Variant::call()
 {
+    DBG("std::vector<Variant> Variant::call()")
     std::vector<Variant> r = call(_tmp_args);
     _tmp_args={};
     return r;
@@ -152,7 +161,7 @@ std::vector<Variant> Variant::call()
 
 std::vector<Variant> Variant::call(std::vector<Variant> args)
 {
-    
+    DBG("std::vector<Variant> Variant::call(std::vector<Variant> args)");
     std::vector<Variant> r = {};
     lua_pushvalue(L, stack_index);
     int results = lua_gettop(L);
@@ -171,6 +180,7 @@ std::vector<Variant> Variant::call(std::vector<Variant> args)
 }
 std::vector<Variant> Variant::pcall(Variant errhandler, int& error_code_out)
 {
+    DBG("std::vector<Variant> Variant::pcall(Variant errhandler, int& error_code_out)");
     std::vector<Variant> r = pcall(errhandler, error_code_out, _tmp_args);
     _tmp_args={};
     return r;
@@ -178,7 +188,7 @@ std::vector<Variant> Variant::pcall(Variant errhandler, int& error_code_out)
 
 std::vector<Variant> Variant::pcall(Variant errhandler, int& error_code_out, std::vector<Variant> args)
 {
-    
+    DBG("std::vector<Variant> Variant::pcall(Variant errhandler, int& error_code_out, std::vector<Variant> args)")
     std::vector<Variant> r = {};
     lua_pushvalue(L, stack_index);
     int results = lua_gettop(L);
@@ -199,6 +209,7 @@ std::vector<Variant> Variant::pcall(Variant errhandler, int& error_code_out, std
 
 int _dump_writer(lua_State*L, const void* chunk, size_t sz, void* ud)
 {
+    DBG("int _dump_writer(lua_State*L, const void* chunk, size_t sz, void* ud)")
     std::vector<char>* into = (std::vector<char>*)ud;
 
     for (size_t i=0;i<sz;i++)
@@ -208,11 +219,13 @@ int _dump_writer(lua_State*L, const void* chunk, size_t sz, void* ud)
 }
 void Variant::dump(std::vector<char>& into)
 {
+    DBG("void Variant::dump(std::vector<char>& into)")
     lua_dump(L, _dump_writer, &into);
 }
 
 bool Variant::next(Variant& key, Variant& value)
 {
+    DBG("bool Variant::next(Variant& key, Variant& value)")
     if (!key.L)
         key.L = L;
     if (!value.L)
@@ -240,11 +253,13 @@ bool Variant::next(Variant& key, Variant& value)
 
 lua_State* Variant::get_lua() const
 {
+    DBG("lua_State* Variant::get_lua() const")
     return L;
 }
 
 void Variant::copyvalue_into(lua_State* into)
 {
+    DBG("void Variant::copyvalue_into(lua_State* into)")
     if (L == into)
     {
         lua_pushvalue(L, stack_index);

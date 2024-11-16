@@ -1,5 +1,6 @@
 #include "LuaCXX.hpp"
 #include "LuaCXX_Common.hpp"
+#include "Internal.hpp"
 #include <cstddef>
 #include <mutex>
 #include <vector>
@@ -8,11 +9,13 @@ using namespace LuaCXX;
 
 Lua::Lua(lua_State*lua)
 {
+    DBG("Lua::Lua(lua_State*lua)");
     L=lua;
 }
 
 ThreadStatus Lua::get_status()const
 {
+    DBG("ThreadStatus Lua::get_status()const");
     ThreadStatus r = ThreadStatus::Ended;
     switch (lua_status(L)) {
         case LUA_YIELD:
@@ -35,11 +38,13 @@ ThreadStatus Lua::get_status()const
 
 Variant Lua::operator[](size_t index) const
 {
+    DBG("Variant Lua::operator[](size_t index) const");
     return Variant(L, index);
 }
 
 std::vector<Variant> Lua::get_stack_as_array() const
 {
+    DBG("std::vector<Variant> Lua::get_stack_as_array() const");
     std::vector<Variant> v_vec = {};
 
     int index_b = 1;
@@ -55,11 +60,13 @@ std::vector<Variant> Lua::get_stack_as_array() const
 
 Lua::operator lua_State *()
 {
+    DBG("Lua::operator lua_State *()");
     return L;
 }
 
 int Lua::return_values()
 {
+    DBG("int Lua::return_values()");
     int rint = return_values(_tmp_return_values);
     _tmp_return_values.clear();
     return rint;
@@ -67,6 +74,7 @@ int Lua::return_values()
 
 int Lua::return_values(std::vector<Variant> return_values)
 {
+    DBG("int Lua::return_values(std::vector<Variant> return_values)");
     int rint = 0;
     for (auto i = return_values.begin();i!=return_values.end();i++)
     {
