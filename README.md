@@ -15,6 +15,51 @@ This is a C++ library that makes it easier to use Lua by providing an intuitive 
 |LuaJIT 2.1    |Yes      |Unknown  |Unknown  |
 
 Feel free to add more Lua versions and platforms Lua is available on to the above table, aswell as testing them out to see if LuaCXX works there or not.
+## Building
+This library does not need a prebuilt Lua library, only Lua header files.
+The Lua library is only needed for building and running tests.
+
+To build it does require CMake 3.28+ and the C++11 standard, both of which should not be too difficult to set up.
+
+### Including in a CMake Project
+Set the `LUA_INCLUDE_DIR` option to a directory containing Lua headers.
+```cmake
+set(LUA_INCLUDE_DIR "/my/path/to/lua/include")
+add_subdirectory(LuaCXX)
+# Do something with LuaCXX
+```
+
+### Linux
+
+Build LuaCXX using the utility Makefile in the root.
+```
+make build INCLUA=/path/to/lua/include
+```
+
+If you want to optimize it for release.
+```
+make build CMAKE_BUILD_TYPE=Release INCLUA=/path/to/lua/include
+```
+
+The utility Makefile chooses Ninja by default to generate build files, to choose something else, set the CMAKE_GENERATOR variable.
+```
+make build CMAKE_GENERATOR="Unix Makefiles"
+```
+
+### Building documentation with Doxygen
+
+The utility Makefile also has a command to build the documentation using doxygen.
+
+```
+make docs
+```
+
+Use something like Python's `http.server` module to serve the files and view them.
+```
+cd docs/html
+python -m http.server
+```
+
 
 ## Code Samples
 
