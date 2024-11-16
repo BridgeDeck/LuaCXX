@@ -14,7 +14,8 @@
 
 #include "LuaCXX_Common.hpp"
 #include "LuaCXX_Variant.hpp"
-#include "lua.h"
+#include <cstddef>
+#include <vector>
 
 namespace LuaCXX
 {
@@ -39,12 +40,12 @@ class Lua
 	 */
 	ThreadStatus get_status() const;
 
-	/**
-	 * @brief Get a handle to the Stack.
-	 * 
-	 * @return Stack 
-	 */
-	Stack stack() const;
+	// /**
+	//  * @brief Get a handle to the Stack.
+	//  * 
+	//  * @return Stack 
+	//  */
+	// Stack stack() const;
 
 	/**
 	 * @brief Create a new string.
@@ -179,12 +180,52 @@ class Lua
 	 */
 	Variant compile(const char* lua_source_code, const char* chunkname="");
 
+	std::vector<Variant> get_stack_as_array() const;
+
 	/**
 	 * @brief Get the wrapped `lua_State*`.
 	 * 
 	 * @return lua_State* 
 	 */
     operator lua_State*();
+
+	Variant operator[](size_t index) const;
+
+	/**
+     * @brief Used at the end of a lua_CFunction to indicate what to push as return values.
+     * 
+     * @param return_values
+     * @return int : How many values Lua will read from the stack as return values.
+     */
+    int return_values(std::vector<Variant> return_values);
+
+    /**
+     * @brief Used at the end of a lua_CFunction to indicate what to push as return values.
+     * 
+     * @tparam ReturnValues 
+     * @param v 
+     * @param vv 
+     * @return int : How many values Lua will read from the stack as return values.
+     */
+    template<class... ReturnValues>
+    int return_values(Variant v, ReturnValues... vv)
+    {
+        _tmp_return_values.push_back(v);
+        return return_values(vv...);
+    }
+
+    /**
+     * @brief Used at the end of a lua_CFunction to indicate what to push as return values.
+     * 
+     * @return int : How many values Lua will read from the stack as return values.
+     */
+    int return_values();
+
+    private:
+    /** @internal
+     * @brief A temporary buffer for storing return values.
+     */
+    std::vector<Variant> _tmp_return_values = {};
 
 	private:
 	/** @internal

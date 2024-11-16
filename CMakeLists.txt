@@ -20,7 +20,7 @@ set (SRC_FILES
 	src/Thread.cpp
 	src/Table.cpp
 	src/String.cpp
-	src/Stack.cpp
+	# src/Stack.cpp
 	src/Variant.cpp
 	src/Variant_env.cpp
 	src/Variant_metatable.cpp
@@ -33,7 +33,7 @@ set (SRC_FILES
 set (INC_FILES
 	include/LuaCXX_Common.hpp
 	include/LuaCXX_Lua.hpp
-	include/LuaCXX_Stack.hpp
+	# include/LuaCXX_Stack.hpp
 	include/LuaCXX_String.hpp
 	include/LuaCXX_Table.hpp
 	include/LuaCXX_Thread.hpp
@@ -46,8 +46,9 @@ set (INC_FILES
 include_directories(${LUA_INCLUDE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
+if (${VERBOSE_DEBUG_PRINTING})
 add_compile_definitions(VERBOSE_DEBUG_PRINTING)
-
+endif()
 add_library(${PROJECT_NAME} STATIC ${SRC_FILES})
 
 include(CTest)

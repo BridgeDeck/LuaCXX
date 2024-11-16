@@ -20,13 +20,13 @@ namespace LuaCXX
  */
 class Variant
 {
-    friend class Lua;
+  friend class Lua;
 	friend class Stack;
 
-    protected:
-    Variant(lua_State* th, int index);
+  protected:
+  Variant(lua_State* th, int index);
 
-    public:
+  public:
 	Variant();
 	~Variant();
 
@@ -236,6 +236,13 @@ class Variant
     protected:
 
 	/** @internal
+	 * @brief Used internally to create a copy of this value and move the copy into another stack.
+	 * 
+	 * @param Linto The Lua state to copy this value into
+	 */
+	void copyvalue_into(lua_State* Linto);
+
+	/** @internal
 	 * @brief A temporary buffer for storing `call` or `pcall` arguments.
 	 * 
 	 */
@@ -247,7 +254,7 @@ class Variant
 	 */
     lua_State* L;
 
-bool is_state_internal;
+	bool is_state_internal;
 
 	/** @internal
 	 * @brief The position that the value this variant points to on the Lua stack.

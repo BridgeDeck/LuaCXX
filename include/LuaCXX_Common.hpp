@@ -57,14 +57,17 @@ class Variant;
 class Thread;
 class Table;
 class String;
-class Stack;
+// class Stack;
 
 template<class T>
 class LightUserdata;
 template<class T>
 class Userdata;
+
+// class Function;
+
 // Function
-typedef void (*Function)(Lua& L, Stack arguments, std::vector<Variant> returns);
+// typedef void (*CFunction)(Lua& L, const std::vector<Variant>& arguments, std::vector<Variant>& returns);
 
 
 }
