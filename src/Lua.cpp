@@ -70,7 +70,7 @@ int Lua::return_values(std::vector<Variant> return_values)
     int rint = 0;
     for (auto i = return_values.begin();i!=return_values.end();i++)
     {
-        lua_pushvalue(L, i->stack_index);
+        i->copyvalue_into(L);
         rint++;
     }
     return rint;

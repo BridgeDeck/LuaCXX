@@ -34,32 +34,40 @@ Variant::~Variant()
         lua_close(L);
 }
 
-Variant::Variant(const char* str)
-{
-  L=luaL_newstate();
-  is_state_internal=true;
-  lua_pushstring(L, str);
-  stack_index = lua_gettop(L);
-}
+// Variant::Variant(const char* str)
+// {
+//   L=luaL_newstate();
+//   is_state_internal=true;
+//   lua_pushstring(L, str);
+//   stack_index = lua_gettop(L);
+// }
 
-Variant::Variant(double num)
-{
-  L=luaL_newstate();
-  is_state_internal=true;
-  lua_pushnumber(L, num);
-  stack_index = lua_gettop(L);
-}
+// Variant::Variant(double num)
+// {
+//   L=luaL_newstate();
+//   is_state_internal=true;
+//   lua_pushnumber(L, num);
+//   stack_index = lua_gettop(L);
+// }
 
-Variant::Variant(bool b)
-{
-  L=luaL_newstate();
-  is_state_internal=true;
-  if (b)
-    lua_pushboolean(L, 1);
-  else
-    lua_pushboolean(L, 0);
-  stack_index = lua_gettop(L);
-}
+// Variant::Variant(bool b)
+// {
+//   L=luaL_newstate();
+//   is_state_internal=true;
+//   if (b)
+//     lua_pushboolean(L, 1);
+//   else
+//     lua_pushboolean(L, 0);
+//   stack_index = lua_gettop(L);
+// }
+
+// Variant::Variant(lua_CFunction func)
+// {
+//     L=luaL_newstate();
+//     is_state_internal=true;
+//     lua_pushcclosure(L, func, 0);
+//     stack_index=lua_gettop(L);
+// }
 
 VariantType Variant::get_type() const
 {
@@ -244,6 +252,6 @@ void Variant::copyvalue_into(lua_State* into)
     else 
     {
         lua_pushvalue(L, stack_index);
-        lua_xmove(L, into, stack_index);
+        lua_xmove(L, into, -1);
     }
 }
