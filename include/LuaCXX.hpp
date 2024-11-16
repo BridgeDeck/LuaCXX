@@ -17,7 +17,6 @@
 #include "LuaCXX_Variant.hpp"
 #include "LuaCXX_String.hpp"
 #include "LuaCXX_Userdata.hpp"
-#include "LuaCXX_Stack.hpp"
 #include "LuaCXX_Version.hpp"
 #include "LuaCXX_Common.hpp"
 
