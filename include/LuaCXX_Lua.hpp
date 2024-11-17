@@ -93,12 +93,37 @@ class Lua
 	Variant new_boolean(bool b);
 
 	/**
-	 * @brief Create a new Lua CFunction.
+	 * @brief Create a new Lua CFunction without any binded values.
 	 * 
 	 * @param f : Pointer to a valid lua_CFunction.
 	 * @return Variant 
 	 */
 	Variant new_function(lua_CFunction f);
+
+	/**
+	 * @brief Create a new Lua CFunction with an array of binded values.
+	 * 
+	 * @param f : Pointer to a valid lua_CFunction.
+	 * @param binds 
+	 * @return Variant 
+	 */
+	Variant new_function(lua_CFunction f, std::vector<Variant> binds);
+
+	/**
+	 * @brief Create a new Lua CFunction with an array of binded values.
+	 * 
+	 * @tparam Binds 
+	 * @param f : Pointer to a valid lua_CFunction.
+	 * @param bind1 
+	 * @param binds 
+	 * @return Variant 
+	 */
+	template<class... Binds>
+	Variant new_function(lua_CFunction f, Variant bind1, Binds... binds)
+	{
+		_tmp_func_binds.push_back(bind1);
+		return new_function(f, binds...);
+	}
 
 	/**
 	 * @brief Initializes a new `T` instance as a Lua userdata.
@@ -227,7 +252,11 @@ class Lua
      */
     std::vector<Variant> _tmp_return_values = {};
 
-	private:
+	/** @internal
+	 * @brief A temporary buffer for storing values that will bind to functions.
+	 * 
+	 */
+	std::vector<Variant> _tmp_func_binds = {};
 	/** @internal
 	 * @brief The Lua state, where all the magic of Lua happens.
 	 */

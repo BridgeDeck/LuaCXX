@@ -8,6 +8,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <vector>
 
 using namespace LuaCXX;
 
@@ -50,7 +51,24 @@ Thread Lua::new_thread()
 Variant Lua::new_function(lua_CFunction f)
 {
     DBG("Variant Lua::new_function(lua_CFunction f)");
-    lua_pushcclosure(L, f, 0);
+    Variant func = new_function(f, _tmp_func_binds);
+    _tmp_func_binds.clear();
+    return func;
+}
+
+Variant Lua::new_function(lua_CFunction f, std::vector<Variant> binds)
+{
+    DBG("Variant Lua::new_function(lua_CFunction f, std::vector<Variant> binds)");
+
+    size_t bind_count = 0;
+    for (auto i = binds.begin();i!=binds.end();i++)
+    {
+        i->copyvalue_into(L);
+        bind_count++;
+    }
+
+    lua_pushcclosure(L, f, bind_count);
+
     return Variant(L, lua_gettop(L));
 }
 

@@ -36,3 +36,6 @@ add_test(NAME "Set the environment of a function" COMMAND function_env)
 
 add_executable(across_states across_states/main.cpp)
 add_test(NAME "Exchange values across seperately created Lua states" COMMAND function_env)
+
+add_executable(funcs_binded_values funcs_binded_values/main.cpp)
+add_test(NAME "Create and run functions that have certain values already binded to them" COMMAND function_env)
