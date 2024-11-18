@@ -148,20 +148,17 @@ class Game
 int _get_team_points(lua_State* L)
 {
     Lua luacxx = Lua(L); // To use LuaCXX
-    
-    // Used to access the stack, which contains the arguments to this function
-    Stack stack = luacxx.stack(); 
 
-    Userdata<Game> game = stack[1]; // First argument
-    String team = stack[2]; // Second argument
+    Userdata<Game> game = luacxx[1]; // First argument
+    String team = luacxx[2]; // Second argument
 
     // `String` converts to a `const char*` automatically.
     if (strcmp(team, "red")==0)
         return stack._return(luacxx.new_number(Game->red_points)); // Returns Game::red_points
     else if (strcmp(team, "blu")==0)
-        return stack._return(luacxx.new_number(Game->blu_points)); // Returns Game::blu_points
+        return luacxx.return_values(luacxx.new_number(Game->blu_points)); // Returns Game::blu_points
     else
-        return stack._return(luacxx.new_nil()); // Returns a nil
+        return luacxx.return_values(luacxx.new_nil()); // Returns a nil
 }
 ```
 
